@@ -11,8 +11,7 @@ class DNSService(models.Model):
     name = models.CharField(max_length=255, blank=True)
     provider = models.CharField(max_length=255, blank=False, choices=PROVIDER_MAPPINGS)
     auth_token = models.TextField(blank=False)
-    str1 = models.TextField(blank=True)  # Fields utilized by provider requirements
-    str2 = models.TextField(blank=True)
+    service_data = models.TextField(blank=False)  # JSON object that is only compatible with specific providers
 
 
 class MonitoredRecord(models.Model):
