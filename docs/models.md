@@ -20,6 +20,7 @@ DNS services represent one account with an API.
 - Type
   - CharField w/ Choices
     - Choices are DNS record Types
+  - Default: `A`
 - Source Of Truth
   - CharField
   - Optional
@@ -29,6 +30,7 @@ DNS services represent one account with an API.
 - Interval
   - CharField
   - Holds `cron` expression interpreted by `background.py`
+  - Default: `* * * * *`
 - History
   - TextField
   - Holds recent valid record data

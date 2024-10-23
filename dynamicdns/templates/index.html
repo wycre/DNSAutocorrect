@@ -1,0 +1,17 @@
+<!-- inherit from base.html-->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Hello World!</h1>
+    <h2>Test Service Info</h2>
+    <p>Name: {{ service.name }}</p>
+    <p>Provider: {{ service_data.provider_name }}</p>
+    <p>Zone ID: {{ service_data.zone_id }}</p>
+    <p>Methods: </p>
+    <p>get_records: {{ service_methods.0 }}</p>
+    <p>update_record: {{ service_methods.1 }}</p>
+    <p>Raw Data: <br> {{ service.service_data }}</p>
+
+
+{% endblock %}

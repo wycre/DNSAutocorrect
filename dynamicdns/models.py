@@ -34,15 +34,14 @@ class MonitoredRecord(models.Model):
     """
     # User Provided Data
     name = models.CharField(max_length=255, blank=False)
-    type = models.CharField(max_length=255, blank=False, choices=RecordTypes)
+    type = models.CharField(max_length=255, blank=False, choices=RecordTypes, default=RecordTypes.A)
     source_of_truth = models.CharField(max_length=255, blank=True)
     dynamic_source_of_truth = models.BooleanField(default=True)
-    interval = models.CharField(max_length=255, blank=False)
+    interval = models.CharField(max_length=255, blank=False, default='* * * * *')
     service = models.ForeignKey(DNSService, on_delete=models.CASCADE)
 
     # Internal Use Data
     history = models.TextField(blank=True)
-
 
 
     def __str__(self):

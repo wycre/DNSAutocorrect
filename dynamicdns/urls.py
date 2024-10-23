@@ -22,5 +22,6 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
-
+    path('', views.index, name='index'),
+    path('new_record/', views.new_monitored_record, name='new_record'),
 ]
