@@ -24,6 +24,102 @@
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap"
           rel="stylesheet">
 
+    <style>
+        body {
+            font-family: 'Atkinson Hyperlegible', serif !important;
+        }
+
+        .unstyled-link {
+            color: inherit;
+            text-decoration: inherit;
+        }
+
+        .unstyled-link {
+            color: inherit;
+        }
+
+
+        .unstyled-container-link {
+            color: inherit;
+            text-decoration: inherit;
+        }
+
+        .unstyled-container-link:hover {
+            color: inherit;
+            text-decoration: inherit;
+        }
+
+        {# These classes handle the colored outline on selected cards #}
+        .border-select-hover:hover {
+            box-shadow: 0 0 0 3px aqua;
+        }
+
+
+        {# These two exist to enable nested links inside cards #}
+        {# The link that covers the card must be absolute #}
+        .card-cover-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        {# The card itself & the inside must be relative #}
+        .card {
+            position: relative;
+        }
+
+
+        .centered-body {
+            max-width: 85rem;
+            margin: 1rem auto 1rem !important;
+        }
+
+        .centered-body-narrow {
+            max-width: 55rem;
+            margin: 1rem auto 1rem !important;
+        }
+
+        {#Secondary text contrast adjustment#}
+        .text-secondary {
+            color: #BBC0C4 !important;
+        }
+
+
+        {# Prose style fixes #}
+        .attachment > a > img {
+            max-width: 100%;
+        }
+
+        .attachment > a {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: inherit;
+            text-decoration: inherit;
+        }
+
+        pre {
+            font-family: "Courier Prime", monospace;
+            background: #24282c;
+            border: 1px solid #aaaa;
+            border-left: 3px solid aqua;
+            color: #ddd;
+            page-break-inside: avoid;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 1.6em;
+            max-width: 100%;
+            overflow: auto;
+            padding: 1em 1.5em;
+            display: block;
+            word-wrap: break-word;
+        }
+    </style>
+
 </head>
 
 <body data-bs-theme="dark">

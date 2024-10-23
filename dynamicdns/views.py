@@ -7,7 +7,7 @@ from django import forms
 from .decorators import unauthenticated, allowed_users
 from django.contrib.auth.decorators import login_required
 
-from dynamicdns.models import DNSService, MonitoredRecord
+from dynamicdns.models import DNSService, MonitoredRecord, RecordTypes
 from .forms import MonitoredRecordForm
 
 
