@@ -9,13 +9,13 @@ This area is a reference to the structure of data utilized by, and returned by U
 
 ### Service Data
 JSON string holding different values depending on intended provider. This string is stored in the `DNSService` database 
-table. It includes the redundant data `provider_id` and `auth_token` to make UPA method calls simpler. UPA method
+table. It includes the redundant data `provider_name` and `auth_token` to make UPA interactions simpler. UPA method
 implementation should parse the JSON and utilize the necessary elements.
 
 Example Service Data object:
 ```json lines
 {
-	"provider_id": 1,
+	"provider_name": "Cloudflare",
 	"auth_token": "secret", // Redundant, but they simplify method calls
 	// Custom Values Here
 	"zone_id": "zzebf"
@@ -55,7 +55,7 @@ Parameters:
 Returns:
 - boolean indicating success or failure
 
-### `upa_sovler`
+### `upa_resovler`
 This method returns a tuple containing references to the other UPA records.
 
 Parameters:
@@ -68,7 +68,7 @@ Returns:
 This is an example for interacting with the UPA.
 
 ```python
-(get_records, update_record) = api_determinator("""Provider ID from DB""")
+(get_records, update_record) = upa_resolver("""Provider ID from DB""")
 
 retrieved_records = get_records(provider_data)
 for record in retrieved_records:
