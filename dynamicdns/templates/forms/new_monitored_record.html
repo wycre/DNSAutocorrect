@@ -1,0 +1,52 @@
+<!-- inherit from base.html-->
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="centered-body-narrow">New Monitored Record</h2>
+<div class="container m-4 border rounded p-2 centered-body-narrow">
+    <div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="id_service" class="form-label">Service: </label>
+            <select name="service" required id="id_service" class="form-control">
+                <option value="">---------</option>
+                {% for serv in services %}
+                    <option value="{{ serv.id }}">{{ serv.name }}</option>
+                {% endfor %}
+            </select>
+            <br />
+
+            <label for="id_name" class="form-label">Record Name: </label>
+            <input type="text" id="id_name" name="name" class="form-control" required>
+            <br />
+
+            <label for="id_type" class="form-label">Record Type: </label>
+            <select name="type" required id="id_type" class="form-control">
+                <option value="1">A - IPv4</option>
+                <option value="2">AAAA - IPv6</option>
+            </select>
+            <br />
+
+            <label for="id_source_of_truth" class="form-label">Source of truth:</label><br />
+            <input type="text" id="id_source_of_truth" name="source_of_truth" class="form-control">
+            <p><sup class="text-muted">* Does nothing if Dynamic DNS is enabled.</sup></p>
+
+            <input type="checkbox" id="id_dynamic_source_of_truth" name="dynamic_source_of_truth" class="form-check-input">
+            <label for="id_dynamic_source_of_truth" class="form-check-label">Use Dynamic DNS?</label>
+            <br /> <br />
+
+            <label for="id_interval" class="form-label">Interval (Cron Expression):</label><br />
+            <input type="text" id="id_interval" name="interval" class="form-control" value="* * * * *">
+            <br />
+
+            <div class="d-flex flex-row justify-content-between">
+                <a href="/" class="btn btn-secondary" style="width: 10rem;">Cancel</a>
+                <input type="submit" class="btn btn-primary" id="submit" style="width: 10rem" name="Submit" value="Submit" />
+            </div>
+        </form>
+        {{form.errors}}
+    </div>
+</div>
+
+{% endblock %}

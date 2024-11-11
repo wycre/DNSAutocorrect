@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dynamicdns.apps.DynamicdnsConfig',
+    'django_bootstrap5',
+    'background_task',
     'dynamicdns',
 ]
 
