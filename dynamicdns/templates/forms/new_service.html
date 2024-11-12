@@ -1,0 +1,29 @@
+<!-- inherit from base.html-->
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="centered-body-narrow">New {{ provider_name }} Service</h2>
+<div class="container m-4 border rounded p-2 centered-body-narrow">
+    <div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% for field in visible_fields %}
+
+                <label for="id_{{ field.0 }}" class="form-label">{{ field.1 }}: </label>
+                <input type="text" id="id_{{ field.0 }}" name="{{ field.0 }}" class="form-control" required>
+                <br />
+
+            {% endfor %}
+
+            <div class="d-flex flex-row justify-content-between">
+                <a href="/new_service/" class="btn btn-secondary" style="width: 10rem;">Cancel</a>
+                <input type="submit" class="btn btn-primary" id="submit" style="width: 10rem" name="Submit" value="Submit" />
+            </div>
+        </form>
+        {{form.errors}}
+    </div>
+</div>
+
+{% endblock %}

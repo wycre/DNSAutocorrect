@@ -1,6 +1,7 @@
 from django.db import models
 from .dns_providers import Providers, ProviderChoices
 
+
 class RecordTypes(models.TextChoices):
     A = "1", "A - IPv4"
     AAAA = "2", "AAAA - IPv6"

@@ -19,7 +19,8 @@ PROVIDER_MAPPINGS = {
 
 
 class ProviderChoices(models.TextChoices):
-    CLOUDFLARE = "1", 'Cloudflare DNS'
+    CLOUDFLARE = "1", 'Cloudflare DNS',
+    NAMECHEAP = "2", 'Namecheap'
 
 
 def upa_resolver(provider_id):
