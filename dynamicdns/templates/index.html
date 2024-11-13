@@ -1,7 +1,49 @@
 <!-- inherit from base.html-->
 {% extends "base.html" %}
 
+{% block title %}
+    <title>DNSAutocorrect - Home</title>
+{% endblock %}
+
 {% block content %}
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">DNSAutocorrect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'new_record' %}">New Record</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'new_service' %}">New Service</a>
+                    </li>
+                </ul>
+                <div class="dropdown nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu-end dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class="m-1">
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">Log Out</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <h1>Hello World!</h1>
 
@@ -22,7 +64,7 @@
 
     <h2>All Monitored Records:</h2>
     <table class="table">
-    <thead>
+        <thead>
         <tr>
             <th>Service</th>
             <th>Name</th>
@@ -30,28 +72,28 @@
             <th>Source of Truth</th>
             <th>Interval</th>
         </tr>
-    </thead>
-    <tbody>
-    {% for record in monitored_records %}
-        <tr>
-            <td>{{ record.service }}</td>
-            <td>{{ record }}</td>
-            <td>{{ record.dynamic_source_of_truth }}</td>
-            <td>{{ record.source_of_truth }}</td>
-            <td>{{ record.interval }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
+        </thead>
+        <tbody>
+        {% for record in monitored_records %}
+            <tr>
+                <td>{{ record.service }}</td>
+                <td>{{ record }}</td>
+                <td>{{ record.dynamic_source_of_truth }}</td>
+                <td>{{ record.source_of_truth }}</td>
+                <td>{{ record.interval }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
     </table>
 
     <h2>All Services</h2>
     <table class="table">
         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Provider</th>
-                <th>Service Data</th>
-            </tr>
+        <tr>
+            <th>Name</th>
+            <th>Provider</th>
+            <th>Service Data</th>
+        </tr>
         </thead>
         <tbody>
         {% for service in services %}
@@ -62,6 +104,6 @@
             </tr>
         {% endfor %}
         </tbody>
-        </table>
+    </table>
 
 {% endblock %}

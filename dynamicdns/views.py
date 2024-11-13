@@ -1,16 +1,34 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 import json
 import inspect
+
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+
 import dynamicdns.dns_providers as dns_providers
 from django.http import HttpResponse
 from django import forms
 from .decorators import unauthenticated, allowed_users
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from dynamicdns.models import DNSService, MonitoredRecord, RecordTypes
 from .forms import MonitoredRecordForm, CloudflareServiceForm
 
 def index(request):
+
+    # GUARD: If no users detected, redirect to setup
+    users = User.objects.all()
+    if len(users) == 0:
+        return redirect('setup')
+
+    # GUARD: Ensure user is logged in
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+
+    # Build Test Index Data
     context = {"request": request}
 
     context["services"] = DNSService.objects.all()
@@ -29,6 +47,11 @@ def index(request):
     context["monitored_records"] = MonitoredRecord.objects.all()
 
     return render(request, "index.html", context)
+
+class SetUpView(CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/setup.html"
 
 
 """
