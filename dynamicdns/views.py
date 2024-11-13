@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 import json
 import inspect
+from cron_validator import CronValidator
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -76,6 +77,18 @@ def new_monitored_record(request):
             interval = form.cleaned_data['interval']
             service = form.cleaned_data['service']
             history = ""
+
+            # Validate Interval
+            try:
+                v_interval = CronValidator.parse(interval)
+            except ValueError:
+                form.add_error("interval",
+                               'Invalid <a href="https://crontab.cronhub.io/" target="_blank">Cron</a> Expression')
+                context['form'] = form
+                return render(request, "forms/new_monitored_record.html", context)
+
+
+
 
             record = MonitoredRecord.objects.create(name=name, type=type, source_of_truth=sot,
                                                     dynamic_source_of_truth=dynamic_sot, interval=interval,

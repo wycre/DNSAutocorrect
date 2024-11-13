@@ -19,10 +19,24 @@
                     <option value="{{ serv.id }}">{{ serv.name }}</option>
                 {% endfor %}
             </select>
+            {% if form.errors.service %}
+                    {% for error in form.errors.service %}
+                        <div class="alert alert-danger m-1">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+            {% endif %}
             <br />
 
             <label for="id_name" class="form-label">Record Name: </label>
             <input type="text" id="id_name" name="name" class="form-control" required>
+            {% if form.errors.name %}
+                    {% for error in form.errors.name %}
+                        <div class="alert alert-danger m-1">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+            {% endif %}
             <br />
 
             <label for="id_type" class="form-label">Record Type: </label>
@@ -30,10 +44,24 @@
                 <option value="1">A - IPv4</option>
                 <option value="2">AAAA - IPv6</option>
             </select>
+            {% if form.errors.type %}
+                    {% for error in form.errors.type %}
+                        <div class="alert alert-danger m-1">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+            {% endif %}
             <br />
 
             <label for="id_source_of_truth" class="form-label">Source of truth:</label><br />
             <input type="text" id="id_source_of_truth" name="source_of_truth" class="form-control">
+            {% if form.errors.source_of_truth %}
+                    {% for error in form.errors.source_of_truth %}
+                        <div class="alert alert-danger m-1">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+            {% endif %}
             <p><sup class="text-muted">* Does nothing if Dynamic DNS is enabled.</sup></p>
 
             <input type="checkbox" id="id_dynamic_source_of_truth" name="dynamic_source_of_truth" class="form-check-input">
@@ -42,6 +70,13 @@
 
             <label for="id_interval" class="form-label">Interval (Cron Expression):</label><br />
             <input type="text" id="id_interval" name="interval" class="form-control" value="* * * * *">
+            {% if form.errors.interval %}
+                    {% for error in form.errors.interval %}
+                        <div class="alert alert-danger m-1">
+                            <strong>{{ error|safe }}</strong>
+                        </div>
+                    {% endfor %}
+            {% endif %}
             <br />
 
             <div class="d-flex flex-row justify-content-between">
@@ -49,7 +84,13 @@
                 <input type="submit" class="btn btn-primary" id="submit" style="width: 10rem" name="Submit" value="Submit" />
             </div>
         </form>
-        {{form.errors}}
+        {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+        {% endif %}
     </div>
 </div>
 
