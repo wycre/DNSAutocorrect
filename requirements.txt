@@ -3,7 +3,6 @@ certifi==2024.8.30
 charset-normalizer==3.4.0
 cron-validator==1.0.8
 Django==5.1.1
-django-background-tasks==1.2.8
 django-bootstrap5==24.3
 idna==3.10
 python-dateutil==2.9.0.post0
