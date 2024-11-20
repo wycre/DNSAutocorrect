@@ -58,6 +58,7 @@ class SetUpView(CreateView):
 """
 Record Forms
 """
+@login_required(login_url='login')
 def new_monitored_record(request):
     context = {"request": request}
 
@@ -101,11 +102,11 @@ def new_monitored_record(request):
             context['form'] = form
             return render(request, "forms/new_monitored_record.html", context)
 
-
+@login_required(login_url='login')
 def edit_monitored_record(request):
     return None
 
-
+@login_required(login_url='login')
 def delete_monitored_record(request):
     return None
 
@@ -113,6 +114,7 @@ def delete_monitored_record(request):
 """
 Service Forms
 """
+@login_required(login_url='login')
 def new_service_chooser(request):
     """Displays a page allowing the user to pick the service provider"""
     context = {"request": request}
@@ -120,6 +122,7 @@ def new_service_chooser(request):
 
 
 """Cloudflare"""
+@login_required(login_url='login')
 def new_cloudflare_service(request):
     context = {"request": request}
     if request.method == "GET":
@@ -149,23 +152,24 @@ def new_cloudflare_service(request):
             context['form'] = form
             return render(request, "forms/new_service.html", context)
 
-
+@login_required(login_url='login')
 def edit_cloudflare_service(request):
     return None
 
-
+@login_required(login_url='login')
 def delete_cloudflare_service(request):
     return None
 
 
 """Namecheap"""
+@login_required(login_url='login')
 def new_namecheap_service(request):
     pass
 
-
+@login_required(login_url='login')
 def edit_namecheap_service(request):
     return None
 
-
+@login_required(login_url='login')
 def delete_namecheap_service(request):
     return None
