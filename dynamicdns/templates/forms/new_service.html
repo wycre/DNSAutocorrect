@@ -1,6 +1,10 @@
 <!-- inherit from base.html-->
 {% extends "base.html" %}
 
+{% block title %}
+<title>DNSAutocorrect - New {{ provider_name }} Service</title>
+{% endblock %}
+
 {% block content %}
 
 <h2 class="centered-body-narrow">New {{ provider_name }} Service</h2>
@@ -13,6 +17,13 @@
 
                 <label for="id_{{ field.0 }}" class="form-label">{{ field.1 }}: </label>
                 <input type="text" id="id_{{ field.0 }}" name="{{ field.0 }}" class="form-control" required>
+                {% if form.errors.field %}
+                    {% for error in form.errors.field %}
+                        <div class="alert alert-danger m-1">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 <br />
 
             {% endfor %}
@@ -21,8 +32,14 @@
                 <a href="/new_service/" class="btn btn-secondary" style="width: 10rem;">Cancel</a>
                 <input type="submit" class="btn btn-primary" id="submit" style="width: 10rem" name="Submit" value="Submit" />
             </div>
+            {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger m-1">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </form>
-        {{form.errors}}
     </div>
 </div>
 

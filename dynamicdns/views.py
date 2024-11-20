@@ -1,16 +1,35 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 import json
 import inspect
+from cron_validator import CronValidator
+
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+
 import dynamicdns.dns_providers as dns_providers
 from django.http import HttpResponse
 from django import forms
 from .decorators import unauthenticated, allowed_users
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from dynamicdns.models import DNSService, MonitoredRecord, RecordTypes
 from .forms import MonitoredRecordForm, CloudflareServiceForm
 
 def index(request):
+
+    # GUARD: If no users detected, redirect to setup
+    users = User.objects.all()
+    if len(users) == 0:
+        return redirect('setup')
+
+    # GUARD: Ensure user is logged in
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+
+    # Build Test Index Data
     context = {"request": request}
 
     context["services"] = DNSService.objects.all()
@@ -30,10 +49,16 @@ def index(request):
 
     return render(request, "index.html", context)
 
+class SetUpView(CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/setup.html"
+
 
 """
 Record Forms
 """
+@login_required(login_url='login')
 def new_monitored_record(request):
     context = {"request": request}
 
@@ -54,6 +79,18 @@ def new_monitored_record(request):
             service = form.cleaned_data['service']
             history = ""
 
+            # Validate Interval
+            try:
+                v_interval = CronValidator.parse(interval)
+            except ValueError:
+                form.add_error("interval",
+                               'Invalid <a href="https://crontab.cronhub.io/" target="_blank">Cron</a> Expression')
+                context['form'] = form
+                return render(request, "forms/new_monitored_record.html", context)
+
+
+
+
             record = MonitoredRecord.objects.create(name=name, type=type, source_of_truth=sot,
                                                     dynamic_source_of_truth=dynamic_sot, interval=interval,
                                                     service=service, history=history)
@@ -65,11 +102,11 @@ def new_monitored_record(request):
             context['form'] = form
             return render(request, "forms/new_monitored_record.html", context)
 
-
+@login_required(login_url='login')
 def edit_monitored_record(request):
     return None
 
-
+@login_required(login_url='login')
 def delete_monitored_record(request):
     return None
 
@@ -77,6 +114,7 @@ def delete_monitored_record(request):
 """
 Service Forms
 """
+@login_required(login_url='login')
 def new_service_chooser(request):
     """Displays a page allowing the user to pick the service provider"""
     context = {"request": request}
@@ -84,6 +122,7 @@ def new_service_chooser(request):
 
 
 """Cloudflare"""
+@login_required(login_url='login')
 def new_cloudflare_service(request):
     context = {"request": request}
     if request.method == "GET":
@@ -113,23 +152,24 @@ def new_cloudflare_service(request):
             context['form'] = form
             return render(request, "forms/new_service.html", context)
 
-
+@login_required(login_url='login')
 def edit_cloudflare_service(request):
     return None
 
-
+@login_required(login_url='login')
 def delete_cloudflare_service(request):
     return None
 
 
 """Namecheap"""
+@login_required(login_url='login')
 def new_namecheap_service(request):
     pass
 
-
+@login_required(login_url='login')
 def edit_namecheap_service(request):
     return None
 
-
+@login_required(login_url='login')
 def delete_namecheap_service(request):
     return None

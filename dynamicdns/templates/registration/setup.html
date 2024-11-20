@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>DNSAutocorrect - Setup</title>
+{% endblock %}
+
+{% block content %}
+
+    <h2 class="centered-body-narrow">Create Login</h2>
+    <div class="container m-4 border rounded p-2 centered-body-narrow">
+        <form method="post">
+            {% csrf_token %}
+            <label for="id_username" class="form-label">Username:</label>
+            <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username"
+                   autofocus="" required="" aria-describedby="id_username_helptext" id="id_username"
+                   value="{{ form.username.value }}" class="form-control">
+            {% if form.errors.username %}
+                {% for error in form.errors.username %}
+                    <div class="alert alert-danger m-1">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="helptext" id="id_username_helptext">Letters, digits and
+                @/./+/-/_ only.
+            </div>
+            <br/>
+
+            <label for="id_password1" class="form-label">Password:</label>
+            <input type="password" name="password1" autocomplete="new-password"
+                   aria-describedby="id_password1_helptext" id="id_password1" class="form-control">
+            {% if form.errors.password1 %}
+                {% for error in form.errors.password1 %}
+                    <div class="alert alert-danger m-1">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="helptext" id="id_password1_helptext" >
+                <ul>
+                    <li>Your password must contain at least 8 characters.</li>
+                    <li>Your password can’t be entirely numeric.</li>
+                </ul>
+            </div>
+
+
+            <label for="id_password2" class="form-label">Password confirmation:</label>
+            <input type="password" name="password2" autocomplete="new-password"
+                   aria-describedby="id_password2_helptext" id="id_password2" class="form-control">
+            {% if form.errors.password2 %}
+                {% for error in form.errors.password2 %}
+                    <div class="alert alert-danger m-1">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <br/>
+
+
+            <div class="d-flex flex-row justify-content-between">
+                <a href="/" class="btn btn-secondary" style="width: 10rem;">Cancel</a>
+                <input type="submit" class="btn btn-primary" id="submit" style="width: 10rem" name="Submit"
+                       value="Submit"/>
+            </div>
+            {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger m-1">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+
+{% endblock %}

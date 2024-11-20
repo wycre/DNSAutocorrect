@@ -23,6 +23,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('setup/', views.SetUpView.as_view(), name='setup'),
 
     path('new_record/', views.new_monitored_record, name='new_record'),
     path('edit_record/', views.edit_monitored_record, name='edit_record'),
