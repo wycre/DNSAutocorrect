@@ -45,13 +45,50 @@
         </div>
     </nav>
 
-    <h1>Hello World!</h1>
 
-    <h2>Links</h2>
-    <ul>
-        <li><a href="/new_service/">Add a DNS Provider Service</a></li>
-        <li><a href="/new_record/">Monitor a new Record</a></li>
-    </ul>
+
+
+    <h1>Home</h1>
+
+    <h2>Records</h2>
+    <div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Service</th>
+                <th scope="col">Source of Truth</th>
+                <th scope="col">Interval</th>
+                <th scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr>
+                    <td><p><strong>{{ record.name }}</strong></p></td>
+                    <td>
+                        <p>{{ record.service }}</p>
+                    </td>
+                    <td>
+                    {% if record.dynamic_source_of_truth %}
+                        <p>Dynamic</p>
+                    {% else %}
+                        <p>{{ record.source_of_truth }}</p>
+                    {% endif %}
+                    </td>
+
+                    <td><p>{{ record.interval }}</p></td>
+
+                    <td>
+                        <a class="btn btn-primary">Perform Check</a>
+                        <a class="btn btn-primary">Edit</a>
+                        <a class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
 
     <h2>Test Service Info</h2>
     <p>Name: {{ test_service.name }}</p>

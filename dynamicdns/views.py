@@ -33,19 +33,7 @@ def index(request):
     context = {"request": request}
 
     context["services"] = DNSService.objects.all()
-
-    service = DNSService.objects.all()[0]
-    context["test_service"] = service
-    service_data = json.loads(service.service_data)
-    context["service_data"] = service_data
-
-    service_methods = []
-    service_methods_raw = dns_providers.upa_resolver(service.provider)
-    service_methods.append(inspect.getsourcefile(service_methods_raw[0]))
-    service_methods.append(inspect.getsourcefile(service_methods_raw[1]))
-    context["service_methods"] = service_methods
-
-    context["monitored_records"] = MonitoredRecord.objects.all()
+    context["records"] = MonitoredRecord.objects.all()
 
     return render(request, "index.html", context)
 
