@@ -146,3 +146,12 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 # set the celery timezone
 CELERY_TIMEZONE = 'UTC'
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'dns_engine': {
+        'task': 'dynamicdns.tasks.run_dns_engine',
+        'schedule': crontab(minute='*/1'),  # Schedule the task to run every minute
+    },
+}

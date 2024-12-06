@@ -16,6 +16,7 @@ from django.contrib.auth.models import User
 
 from dynamicdns.models import DNSService, MonitoredRecord, RecordTypes
 from .forms import MonitoredRecordForm, CloudflareServiceForm
+from .tasks import run_dns_engine
 
 def index(request):
 
@@ -35,7 +36,11 @@ def index(request):
     context["services"] = DNSService.objects.all()
     context["records"] = MonitoredRecord.objects.all()
 
+    run_dns_engine()
+
     return render(request, "index.html", context)
+
+
 
 class SetUpView(CreateView):
     form_class = UserCreationForm

@@ -5,11 +5,12 @@ Celery tasks for dynamicdns.
 from celery import shared_task
 from requests import get
 import dynamicdns.dns_providers as dns_providers
+from DNSAutocorrect.celery import app
 
 from dynamicdns.models import MonitoredRecord, DNSService
 
 
-@shared_task
+@app.task
 def run_dns_engine():
     """
     Performs the checks on all DNS records based on timing.
@@ -32,12 +33,15 @@ def run_dns_engine():
         service_records = get_records(service.service_data)
 
         for record in service_records:
+            print(f"Examining {record[0]}")
 
             # If this service record is a monitored record
-            if record[0] in record_names:
+            if record[0] in record_names.keys():
+                print(f"Monitoring {record[0]}")
 
                 # If source of truth is dynamic
                 if record_names[record[0]][0]:
+                    print(f"{record[0]} is Dynamic")
                     truth = get("https://api.ipify.org").text
 
                     if record[2] != truth:
@@ -51,6 +55,7 @@ def run_dns_engine():
 
                 # If source of truth is static
                 if record_names[record[0]][1]:
+                    print(f"{record[0]} is Static")
                     truth = record_names[record[0]][1]
                     if record[2] != truth:
                         print(f"{record[0]} MISMATCH: {record[2]} != {truth}")
