@@ -25,12 +25,12 @@ def get_records(service_data):
     # Data parsing and reorg
     data = []
     for record in response['result']:
-        data.append((
+        data.append([
             record['name'],
             record['type'],
             record['content'],
             record['id']
-        ))
+        ])
 
     return data
 
