@@ -36,10 +36,19 @@ def index(request):
     context["services"] = DNSService.objects.all()
     context["records"] = MonitoredRecord.objects.all()
 
-    run_dns_engine()
-
     return render(request, "index.html", context)
 
+
+@login_required(login_url='login')
+def run_dns_check(request):
+    """
+    Manually runs dns check.
+    """
+    if request.method == "GET":
+        return redirect("/")
+    elif request.method == "POST":
+        run_dns_engine()
+        return redirect("/")
 
 
 class SetUpView(CreateView):
@@ -68,24 +77,11 @@ def new_monitored_record(request):
             type = form.cleaned_data['type']
             sot = form.cleaned_data['source_of_truth']
             dynamic_sot = form.cleaned_data['dynamic_source_of_truth']
-            interval = form.cleaned_data['interval']
             service = form.cleaned_data['service']
             history = ""
 
-            # Validate Interval
-            try:
-                v_interval = CronValidator.parse(interval)
-            except ValueError:
-                form.add_error("interval",
-                               'Invalid <a href="https://crontab.cronhub.io/" target="_blank">Cron</a> Expression')
-                context['form'] = form
-                return render(request, "forms/new_monitored_record.html", context)
-
-
-
-
             record = MonitoredRecord.objects.create(name=name, type=type, source_of_truth=sot,
-                                                    dynamic_source_of_truth=dynamic_sot, interval=interval,
+                                                    dynamic_source_of_truth=dynamic_sot,
                                                     service=service, history=history)
 
             context['record'] = record

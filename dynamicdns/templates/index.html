@@ -77,9 +77,12 @@
                     </td>
 
                     <td>
-                        <a class="btn btn-primary">Perform Check</a>
-                        <a class="btn btn-primary">Edit</a>
-                        <a class="btn btn-danger">Delete</a>
+                        <form action="{% url 'run_dns_check' %}" method="post" enctype="multipart/form-data" class="mb-1">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-primary" id="perform_check" name="Perform Check" value="Perform Check" />
+                        </form>
+                        <a href="/" class="btn btn-primary">Edit</a>
+                        <a href="/" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             {% endfor %}

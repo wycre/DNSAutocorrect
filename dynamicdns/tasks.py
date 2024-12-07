@@ -14,7 +14,6 @@ from dynamicdns.models import MonitoredRecord, DNSService
 def run_dns_engine():
     """
     Performs the checks on all DNS records based on timing.
-    :return:
     """
 
     # Pull DB Data
@@ -33,7 +32,6 @@ def run_dns_engine():
         service_records = get_records(service.service_data)
 
         for record in service_records:
-            print(f"Examining {record[0]}")
 
             # If this service record is a monitored record
             if record[0] in record_names.keys():
@@ -52,6 +50,9 @@ def run_dns_engine():
                         if not update_record(service.service_data, record, new_record):
                             print(f"{record[0]} UPDATE FAILED")
 
+                    else:
+                        print(f"{record[0]} No Changes Necessary")
+
 
                 # If source of truth is static
                 if record_names[record[0]][1]:
@@ -65,3 +66,5 @@ def run_dns_engine():
                         if not update_record(service.service_data, record, new_record):
                             print(f"{record[0]} UPDATE FAILED")
 
+                    else:
+                        print(f"{record[0]} No Changes Necessary")
