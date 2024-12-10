@@ -22,5 +22,4 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path('', include('dynamicdns.urls')),
     path('cloudflare/', include('moduleCloudflare.urls')),
-    path('namecheap/', include('moduleNamecheap.urls'))
 ]

@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'celery',
     'dynamicdns',
     'moduleCloudflare',
-    'moduleNamecheap'
 ]
 
 MIDDLEWARE = [
