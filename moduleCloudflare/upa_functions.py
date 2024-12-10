@@ -1,5 +1,5 @@
 """
-Cloudflare DNS
+Cloudflare DNS UPA functions
 """
 from requests import get, post, patch
 import json, datetime
@@ -68,22 +68,3 @@ def update_record(service_data, original_record, updated_record):
         print('==Record Update Failed==')
         print(response)
         return False
-
-
-
-if __name__ == '__main__':
-    """Test function"""
-    zone_id = '"zone_id"'
-    api_key = '"api_key"'
-    test_service_data = '{{"provider_name":"Cloudflare","auth_token":{},"zone_id":{}}}'.format(api_key, zone_id)
-
-    all_records = get_records(test_service_data)
-    print(all_records)
-
-    dummy1 = all_records[4]
-    new_dummy = (dummy1[0], dummy1[1], '1.2.3.4', dummy1[3])
-    status = update_record(test_service_data, dummy1, new_dummy)
-    print(status)
-
-
-

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'celery',
     'dynamicdns',
+    'moduleCloudflare',
+    'moduleNamecheap'
 ]
 
 MIDDLEWARE = [

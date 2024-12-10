@@ -2,9 +2,8 @@
 Celery tasks for dynamicdns.
 """
 
-from celery import shared_task
 from requests import get
-import dynamicdns.dns_providers as dns_providers
+import dns_providers as dns_providers
 from DNSAutocorrect.celery import app
 
 from dynamicdns.models import MonitoredRecord, DNSService

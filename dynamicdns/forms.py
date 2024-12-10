@@ -23,12 +23,3 @@ class MonitoredRecordForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MonitoredRecordForm, self).__init__(*args, **kwargs)
         self.fields['service']=forms.ModelChoiceField(queryset=DNSService.objects.all())
-
-
-# provider module specific forms
-class CloudflareServiceForm(DNSServiceForm):
-    """Cloudflare DNS Service Form"""
-    zone_id = forms.CharField()
-
-
-

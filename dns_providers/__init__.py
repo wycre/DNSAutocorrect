@@ -3,20 +3,23 @@ Implements support for DNS APIs.
 """
 from enum import Enum
 from django.db import models
-from dynamicdns.dns_providers import cloudflare
 
+"""
+MODIFY: Add imports for each DNS provider module
+        Update the PROVIDER_MAPPINGS, Providers, and ProviderChoices definitions
+"""
+import moduleCloudflare.upa_functions as cloudflare
+import moduleNamecheap.upa_functions as namecheap
+
+PROVIDER_MAPPINGS = {
+    1: 'Cloudflare DNS',
+}
 
 class Providers(Enum):
     """
     Standard reference for available providers.
     """
     CLOUDFLARE = "1"
-
-
-PROVIDER_MAPPINGS = {
-    1: 'Cloudflare DNS',
-}
-
 
 class ProviderChoices(models.TextChoices):
     CLOUDFLARE = "1", 'Cloudflare DNS',
@@ -41,8 +44,6 @@ def upa_resolver(provider_id):
 
         case _:
             raise ValueError('Invalid provider id')
-
-
 
 
 if __name__ == '__main__':
