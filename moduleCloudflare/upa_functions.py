@@ -68,7 +68,3 @@ def update_record(service_data, original_record, updated_record):
         print('==Record Update Failed==')
         print(response)
         return False
-
-
-
-

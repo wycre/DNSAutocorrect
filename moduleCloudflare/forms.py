@@ -1,5 +1,5 @@
 from django import forms
 from dynamicdns.forms import DNSServiceForm
 
-class CloudflareServiceForm(DNSServiceForm):
+class IndividualServiceForm(DNSServiceForm):
     zone_id = forms.CharField()
