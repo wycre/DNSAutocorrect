@@ -1,21 +1,16 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-import json
-import inspect
-from cron_validator import CronValidator
+
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-import dynamicdns.dns_providers as dns_providers
-from django.http import HttpResponse
-from django import forms
-from .decorators import unauthenticated, allowed_users
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from dynamicdns.models import DNSService, MonitoredRecord, RecordTypes
-from .forms import MonitoredRecordForm, CloudflareServiceForm
+from dynamicdns.models import DNSService, MonitoredRecord
+from .forms import MonitoredRecordForm
 from .tasks import run_dns_engine
 
 def index(request):
@@ -109,56 +104,3 @@ def new_service_chooser(request):
     context = {"request": request}
     return render(request, "new_service_chooser.html", context)
 
-
-"""Cloudflare"""
-@login_required(login_url='login')
-def new_cloudflare_service(request):
-    context = {"request": request}
-    if request.method == "GET":
-        form = CloudflareServiceForm()
-        context['form'] = form
-        context['provider_name'] = "Cloudflare"
-        context['visible_fields'] = [("name", "Name"), ("auth_token", "API Key"), ("zone_id", "Zone ID")]
-
-        return render(request, "forms/new_service.html", context)
-
-    elif request.method == "POST":
-        form = CloudflareServiceForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            auth_token = form.cleaned_data['auth_token']
-            zone_id = form.cleaned_data['zone_id']
-            provider = dns_providers.ProviderChoices.CLOUDFLARE
-
-            service_data = '{{"provider_name": "Cloudflare", "auth_token": "{0}", "zone_id": "{1}"}}'.format(auth_token,
-                                                                                                             zone_id)
-
-            DNSService.objects.create(name=name, provider=provider, auth_token=auth_token, service_data=service_data)
-
-            return redirect('/')
-
-        else:
-            context['form'] = form
-            return render(request, "forms/new_service.html", context)
-
-@login_required(login_url='login')
-def edit_cloudflare_service(request):
-    return None
-
-@login_required(login_url='login')
-def delete_cloudflare_service(request):
-    return None
-
-
-"""Namecheap"""
-@login_required(login_url='login')
-def new_namecheap_service(request):
-    pass
-
-@login_required(login_url='login')
-def edit_namecheap_service(request):
-    return None
-
-@login_required(login_url='login')
-def delete_namecheap_service(request):
-    return None

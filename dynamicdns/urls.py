@@ -31,13 +31,5 @@ urlpatterns = [
     path('delete_record/', views.delete_monitored_record, name='delete_record'),
 
     path('new_service/', views.new_service_chooser, name='new_service'),
-
-    path('new_service/cloudflare', views.new_cloudflare_service, name='new_cloudflare_service'),
-    path('edit_service/cloudflare', views.edit_cloudflare_service, name='edit_cloudflare_service'),
-    path('delete_service/cloudflare', views.delete_cloudflare_service, name='delete_cloudflare_service'),
-
-    path('new_service/namechheap', views.new_namecheap_service, name='new_namecheap_service'),
-    path('edit_service/namechheap', views.edit_namecheap_service, name='edit_namecheap_service'),
-    path('delete_service/namechheap', views.delete_namecheap_service, name='delete_namecheap_service'),
 ]
 

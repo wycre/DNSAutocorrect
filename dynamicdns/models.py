@@ -1,5 +1,5 @@
 from django.db import models
-from .dns_providers import Providers, ProviderChoices
+from dns_providers import ProviderChoices
 
 
 class RecordTypes(models.TextChoices):

@@ -1,4 +1,4 @@
-"""
+"""Docker
 URL configuration for DNSAutocorrect project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -21,4 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
     path('', include('dynamicdns.urls')),
+    path('cloudflare/', include('moduleCloudflare.urls')),
+    path('namecheap/', include('moduleNamecheap.urls'))
 ]

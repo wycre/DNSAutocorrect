@@ -3,7 +3,13 @@ Implements support for DNS APIs.
 """
 from enum import Enum
 from django.db import models
-from dynamicdns.dns_providers import cloudflare
+
+"""
+MODIFY: Add imports for each DNS provider module
+"""
+import moduleCloudflare.upa_functions as cloudflare
+import moduleNamecheap.upa_functions as namecheap
+
 
 
 class Providers(Enum):

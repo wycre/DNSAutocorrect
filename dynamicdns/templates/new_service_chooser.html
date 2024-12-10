@@ -12,7 +12,7 @@
     <div class="d-flex flex-row flex-wrap">
         {#        Cloudflare DNS        #}
         <div class="card border-select-hover flex-fill m-1" style="width: 20rem; height: 100%">
-            <a href="/new_service/cloudflare" class="unstyled-container-link">
+            <a href="{% url 'new_cloudflare_service' %}" class="unstyled-container-link">
                 <div class="card-header d-flex justify-content-center">
                     <p class="mb-0 pb-0 text-emphasis">Cloudflare DNS</p>
                 </div>
@@ -26,7 +26,7 @@
 
         {#        Namecheap        #}
         <div class="card border-select-hover flex-fill m-1" style="width: 20rem; height: 100%">
-            <a href="/new_service/namecheap" class="unstyled-container-link">
+            <a href="{% url 'new_namecheap_service' %}" class="unstyled-container-link">
                 <div class="card-header d-flex justify-content-center">
                     <p class="mb-0 pb-0 text-emphasis">Namecheap</p>
                 </div>
