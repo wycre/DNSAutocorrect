@@ -16,6 +16,7 @@ from django.contrib.auth.models import User
 
 from dynamicdns.models import DNSService, MonitoredRecord, RecordTypes
 from .forms import MonitoredRecordForm, CloudflareServiceForm
+from .tasks import run_dns_engine
 
 def index(request):
 
@@ -33,21 +34,22 @@ def index(request):
     context = {"request": request}
 
     context["services"] = DNSService.objects.all()
-
-    service = DNSService.objects.all()[0]
-    context["test_service"] = service
-    service_data = json.loads(service.service_data)
-    context["service_data"] = service_data
-
-    service_methods = []
-    service_methods_raw = dns_providers.upa_resolver(service.provider)
-    service_methods.append(inspect.getsourcefile(service_methods_raw[0]))
-    service_methods.append(inspect.getsourcefile(service_methods_raw[1]))
-    context["service_methods"] = service_methods
-
-    context["monitored_records"] = MonitoredRecord.objects.all()
+    context["records"] = MonitoredRecord.objects.all()
 
     return render(request, "index.html", context)
+
+
+@login_required(login_url='login')
+def run_dns_check(request):
+    """
+    Manually runs dns check.
+    """
+    if request.method == "GET":
+        return redirect("/")
+    elif request.method == "POST":
+        run_dns_engine()
+        return redirect("/")
+
 
 class SetUpView(CreateView):
     form_class = UserCreationForm
@@ -75,24 +77,11 @@ def new_monitored_record(request):
             type = form.cleaned_data['type']
             sot = form.cleaned_data['source_of_truth']
             dynamic_sot = form.cleaned_data['dynamic_source_of_truth']
-            interval = form.cleaned_data['interval']
             service = form.cleaned_data['service']
             history = ""
 
-            # Validate Interval
-            try:
-                v_interval = CronValidator.parse(interval)
-            except ValueError:
-                form.add_error("interval",
-                               'Invalid <a href="https://crontab.cronhub.io/" target="_blank">Cron</a> Expression')
-                context['form'] = form
-                return render(request, "forms/new_monitored_record.html", context)
-
-
-
-
             record = MonitoredRecord.objects.create(name=name, type=type, source_of_truth=sot,
-                                                    dynamic_source_of_truth=dynamic_sot, interval=interval,
+                                                    dynamic_source_of_truth=dynamic_sot,
                                                     service=service, history=history)
 
             context['record'] = record

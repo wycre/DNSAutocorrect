@@ -18,7 +18,7 @@ class DNSServiceForm(forms.ModelForm):
 class MonitoredRecordForm(forms.ModelForm):
     class Meta:
         model = MonitoredRecord
-        fields = ('service', 'name', 'type', 'source_of_truth', 'dynamic_source_of_truth', 'interval')
+        fields = ('service', 'name', 'type', 'source_of_truth', 'dynamic_source_of_truth')
 
     def __init__(self, *args, **kwargs):
         super(MonitoredRecordForm, self).__init__(*args, **kwargs)

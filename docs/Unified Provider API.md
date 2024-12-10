@@ -29,7 +29,7 @@ This structure is not final, and new data may be added later, but the ordering o
 
 Record structure:
 ```python
-record = (record_name, record_type, record_data, record_id)
+record = [record_name, record_type, record_data, record_id]
 ```
 
 ## API Methods

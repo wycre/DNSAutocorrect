@@ -68,17 +68,6 @@
             <label for="id_dynamic_source_of_truth" class="form-check-label">Use Dynamic DNS?</label>
             <br /> <br />
 
-            <label for="id_interval" class="form-label">Interval (Cron Expression):</label><br />
-            <input type="text" id="id_interval" name="interval" class="form-control" value="* * * * *">
-            {% if form.errors.interval %}
-                    {% for error in form.errors.interval %}
-                        <div class="alert alert-danger m-1">
-                            <strong>{{ error|safe }}</strong>
-                        </div>
-                    {% endfor %}
-            {% endif %}
-            <br />
-
             <div class="d-flex flex-row justify-content-between">
                 <a href="/" class="btn btn-secondary" style="width: 10rem;">Cancel</a>
                 <input type="submit" class="btn btn-primary" id="submit" style="width: 10rem" name="Submit" value="Submit" />
