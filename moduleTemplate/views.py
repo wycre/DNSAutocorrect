@@ -18,7 +18,7 @@ def new_individual_service(request):
         context['form'] = form
 
         """
-        Modify these context variables to adjust the APPEARANCE of the form
+        MODIFY these context variables to adjust the APPEARANCE of the form
         visible_fields is a list of tuples containing the ("field_name", "Rendered Field Name")
             This is to allow you to rename fields in the rendered form.
             A FORM FIELD MUST BE INCLUDED IN THIS LIST TO BE RENDERED IN THE FORM PAGE
@@ -57,8 +57,4 @@ def new_individual_service(request):
 
 @login_required(login_url='login')
 def edit_individual_service(request):
-    return None
-
-@login_required(login_url='login')
-def delete_individual_service(request):
     return None

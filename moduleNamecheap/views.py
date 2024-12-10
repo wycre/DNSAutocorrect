@@ -43,6 +43,3 @@ def new_namecheap_service(request):
 def edit_namecheap_service(request):
     return None
 
-@login_required(login_url='login')
-def delete_namecheap_service(request):
-    return None

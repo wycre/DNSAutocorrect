@@ -41,7 +41,3 @@ def new_cloudflare_service(request):
 @login_required(login_url='login')
 def edit_cloudflare_service(request):
     return None
-
-@login_required(login_url='login')
-def delete_cloudflare_service(request):
-    return None
