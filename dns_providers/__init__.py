@@ -9,7 +9,6 @@ MODIFY: Add imports for each DNS provider module
         Update the PROVIDER_MAPPINGS, Providers, and ProviderChoices definitions
 """
 import moduleCloudflare.upa_functions as cloudflare
-import moduleNamecheap.upa_functions as namecheap
 
 PROVIDER_MAPPINGS = {
     1: 'Cloudflare DNS',
@@ -23,7 +22,6 @@ class Providers(Enum):
 
 class ProviderChoices(models.TextChoices):
     CLOUDFLARE = "1", 'Cloudflare DNS',
-    NAMECHEAP = "2", 'Namecheap'
 
 
 def upa_resolver(provider_id):
